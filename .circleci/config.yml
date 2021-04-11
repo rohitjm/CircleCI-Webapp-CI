@@ -29,9 +29,9 @@ jobs:
       - run: |
           cp /tmp/workspace/webappdemo .
           TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t virtualthoughts/circleci-webappdemo:$TAG .
+          docker build -t rohitjm/circleci-webappdemo:$TAG .
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-          docker push virtualthoughts/circleci-webappdemo:$TAG
+          docker push rohitjm/circleci-webappdemo:$TAG
   GenerateYAML:
     docker:
       - image: cimg/base:2020.06
@@ -40,17 +40,17 @@ jobs:
           at: /tmp/workspace
       - run : |
           TAG=0.1.$CIRCLE_PREVIOUS_BUILD_NUM
-          git clone https://github.com/David-VTUK/CircleCI-Webapp-CD /tmp/CircleCI-Webapp-CD
+          git clone https://github.com/rohitjm/CircleCI-Webapp-CD /tmp/CircleCI-Webapp-CD
           cd /tmp/CircleCI-Webapp-CD
           cp /tmp/workspace/deployment.yaml .
           sed -i 's/\(circleci-webappdemo\)\(.*\)/\1:'$TAG'/' ./deployment.yaml
           git config credential.helper 'cache --timeout=120'
-          git config user.email "CircleCI@virtualthoughts.co.uk"
-          git config user.name "CircleCI"
+          git config user.email "rohitjm@gmail.com"
+          git config user.name "rohitjm"
           git add .
           git commit -m "Update via CircleCI"
           # Push quietly to prevent showing the token in log
-          git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/David-VTUK/CircleCI-Webapp-CD.git master
+          git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/rohitjm/CircleCI-Webapp-CD.git master
 
 workflows:
   version: 2
