@@ -25,7 +25,7 @@ metadata:
   labels:
     app: webapp-demo
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: webapp-demo
