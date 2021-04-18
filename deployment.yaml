@@ -18,14 +18,25 @@ spec:
   type: LoadBalancer
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: Rollout
 metadata:
   name: webapp-demo-deployment
   namespace: webapp-demo
   labels:
     app: webapp-demo
 spec:
-  replicas: 1
+  replicas: 3
+  strategy:
+    canary:
+      steps:
+      - setWeight: 20
+      - pause: {}
+      - setWeight: 40
+      - pause: {duration: 10}
+      - setWeight: 60
+      - pause: {duration: 10}
+      - setWeight: 80
+      - pause: {duration: 10}
   selector:
     matchLabels:
       app: webapp-demo
